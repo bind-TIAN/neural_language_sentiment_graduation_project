@@ -1,0 +1,43 @@
+from collections import Counter
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def KNN(x_train, y_train, x_predict):
+    return [_predict(x_train, y_train, x) for x in x_predict]
+
+
+def _predict(x_train, y_train, x, k=7):
+    distances = [distance(item, x) for item in x_train]
+    return Counter(y_train[np.argsort(distances)[:k]]).most_common(1)[0][0]
+
+
+def distance(a, b, p=2):
+    return np.sum(np.abs(a - b) ** p) ** (1 / p)
+
+
+if __name__ == "__main__":
+    distances, list1 = [], []
+    count_pos, count_neg, count_zero = 0, 0, 0
+    x_train = pd.read_excel('./2000_pos_neg.xlsx', header=None).values[:, :2]
+    y_train = pd.read_excel('./2000_pos_neg.xlsx', header=None).values[:, -1]
+    x = pd.read_excel('./test_pos.xlsx', header=None).values[:, :2]
+    list1 = KNN(x_train, y_train, x)
+    for i in range(len(list1)):
+        if list1[i] == 2:
+            count_pos += 1
+        elif list1[i] == 1:
+            count_neg += 1
+        elif list1[i] == 0:
+            count_zero += 1
+    print(KNN(x_train, y_train, x))
+    print(count_pos, count_neg, count_zero)
+    # plt.xlim(0, 80)
+    # plt.ylim(0, 80)
+    # plt.scatter(x_train[y_train == 0, 0], x_train[y_train == 0, 1], color='r', s=5)
+    # plt.scatter(x_train[y_train == 1, 0], x_train[y_train == 1, 1], color='#FFD700', s=5)
+    # plt.scatter(x_train[y_train == 2, 0], x_train[y_train == 2, 1], color='g', s=5)
+    # plt.xlabel('positive_similarity_weight')
+    # plt.ylabel('negative_similarity_weight')
+    # plt.show()
