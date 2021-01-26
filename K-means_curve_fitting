@@ -1,0 +1,39 @@
+import pandas as pd
+
+count_pos, count_neg, count_zhongli = 0, 0, 0
+# x_train = pd.read_csv('E:/data/test_pos_1000.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_neg_1000.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_pos_875.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_neg_875.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_pos_750.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_neg_750.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_pos_625.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_neg_625.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_pos_500.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_neg_500.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_pos_375.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_neg_375.csv', header=None).values[:, :2]
+x_train = pd.read_csv('E:/data/test_pos_250.csv', header=None).values[:, :2]
+# x_train = pd.read_csv('E:/data/test_neg_250.csv', header=None).values[:, :2]
+for i in range(x_train.shape[0]):
+    y = 1.26 * x_train[i][0] - 2.86
+    # y = 1.025 * x_train[i][0] - 0.8245
+    # y = 0.544 * x_train[i][0] + 1.3136
+    # y = 2.29 * x_train[i][0] - 7.1
+    # y = 0.671 * x_train[i][0] + 3.29
+
+    if x_train[i][1] < y:
+        count_pos += 1
+    elif x_train[i][1] == y:
+        count_zhongli += 1
+    else:
+        count_neg += 1
+    '''
+    if x_train[i][1] > y:
+        count_neg += 1
+    elif x_train[i][1] == y:
+        count_zhongli += 1
+    else:
+        count_pos += 1'''
+
+print(count_pos, count_zhongli, count_neg)
